@@ -8,15 +8,13 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
-import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.render.ViewType;
-import com.mchange.v2.c3p0.cfg.C3P0Config;
 import com.sg.interceptor.GlobalInterceptor;
-import com.sg.model.Article;
+import com.sg.model.FileInfo;
 import com.sg.model.User;
 import com.sg.routes.BackRoutes;
 
-public class DemoConfig extends JFinalConfig{
+public class MainConfig extends JFinalConfig{
 
 	@Override
 	public void configConstant(Constants me) {
@@ -29,7 +27,7 @@ public class DemoConfig extends JFinalConfig{
 	@Override
 	public void configRoute(Routes me) {
 		me.add("/", HelloController.class);
-		me.add("/test",TestController.class);
+		me.add("/font",TestController.class);
 		me.add(new BackRoutes());
 	}
 
@@ -38,13 +36,14 @@ public class DemoConfig extends JFinalConfig{
 		C3p0Plugin plugin = new C3p0Plugin(getProperty("jdbcUrl"), getProperty("user"), getProperty("password"));
 		me.add(plugin);
 		
-		me.add(new EhCachePlugin());//
+//		me.add(new EhCachePlugin());//
 		
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(plugin);
 		me.add(arp);
 		arp.addMapping("user", User.class);
 		
 //		arp.addMapping("article", "articleId", Article.class);
+		arp.addMapping("fileinfo", FileInfo.class);
 	}
 
 	@Override
