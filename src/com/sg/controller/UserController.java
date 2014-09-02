@@ -1,4 +1,4 @@
-package com.sg;
+package com.sg.controller;
 
 import com.jfinal.core.Controller;
 
