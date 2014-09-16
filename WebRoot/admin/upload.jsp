@@ -10,8 +10,10 @@
 <body>
 
 <form action="/admin/uploadfile" method="post" enctype="multipart/form-data">
-	<input type="file" name="uploadfile"> 
-	<input type="submit" name="upload" value="上传">
+	<input type="file" name="uploadfile" value="apk文件"/> 
+	<input type="file" name="preview" value="预览图片"/>
+	<input type="file" name="thumbnail" value="缩略图"/>
+	<input type="submit" name="upload" value="上传"/>
 </form>
 <table>
 	<c:if test="${!empty fileinfo}">

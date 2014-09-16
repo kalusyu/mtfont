@@ -11,7 +11,7 @@ import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.render.ViewType;
 import com.sg.controller.FontController;
 import com.sg.interceptor.GlobalInterceptor;
-import com.sg.model.FileInfo;
+import com.sg.model.FontFileModel;
 import com.sg.model.ModelDeviceInfo;
 import com.sg.model.User;
 import com.sg.routes.BackRoutes;
@@ -44,7 +44,7 @@ public class MainConfig extends JFinalConfig{
 		arp.addMapping("user", User.class);
 		
 //		arp.addMapping("article", "articleId", Article.class);
-		arp.addMapping("fileinfo", FileInfo.class);
+		arp.addMapping("fileinfo", FontFileModel.class);
 		arp.addMapping("deviceinfo", ModelDeviceInfo.class);
 	}
 
