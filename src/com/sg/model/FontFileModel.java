@@ -23,12 +23,16 @@ public class FontFileModel extends Model<FontFileModel> {
     public java.util.List<FontFileModel> findAll() {
         return find("select * from fileinfo order by id asc");
     }
+    
+    public FontFileModel getFontFileById(int id){
+    	return find("select * from fileinfo where id="+id).get(0);
+    }
 
     public void saveFile(FontFile file) {
         UUID uuid = UUID.randomUUID();
         String str = uuid.toString();
         try {
-            new FontFileModel().set("fontDisplayName", file.getFontDisplayName())
+            set("fontDisplayName", file.getFontDisplayName())
                     .set("fontName", new String(str.getBytes(),"UTF-8"))
                     .set("fontSize", file.getFontSize())
                     .set("fontUri", file.getFontLocalPath())
