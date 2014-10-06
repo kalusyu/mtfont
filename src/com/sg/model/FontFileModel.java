@@ -32,7 +32,7 @@ public class FontFileModel extends Model<FontFileModel> {
         UUID uuid = UUID.randomUUID();
         String str = uuid.toString();
         try {
-            set("fontDisplayName", file.getFontDisplayName())
+            new FontFileModel().set("fontDisplayName", file.getFontDisplayName())
                     .set("fontName", new String(str.getBytes(),"UTF-8"))
                     .set("fontSize", file.getFontSize())
                     .set("fontUri", file.getFontLocalPath())

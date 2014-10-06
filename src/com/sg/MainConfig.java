@@ -24,6 +24,7 @@ public class MainConfig extends JFinalConfig{
 		me.setDevMode(true);
 		me.setViewType(ViewType.JSP);
 //		me.setUrlParaSeparator("?"); //设置参数分隔符
+		me.setMaxPostSize(1024 * 1024 * 10 * 2);
 	}
 
 	@Override

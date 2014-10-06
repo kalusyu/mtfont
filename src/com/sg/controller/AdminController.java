@@ -128,10 +128,14 @@ public class AdminController extends Controller{
 	}
 	
 	
-	public boolean isFreeUser() {
+	public void isFreeUser() {
 		String imei = getPara();
 		FreeUserModel freeuser = FreeUserModel.dao.findFreeUserByImei(imei);
-		return imei.equals(freeuser.get("imei"));
+		boolean flag = false;
+		if (freeuser != null){
+		    flag = imei.equals(freeuser.get("imei"));
+		}
+		renderText(String.valueOf(flag));
 	}
 	
 	public byte[] getPreviewFont(){
