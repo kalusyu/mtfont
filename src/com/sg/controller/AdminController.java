@@ -61,19 +61,20 @@ public class AdminController extends Controller{
 	 */
 	private void handleFile(FontFile fontFile,UploadFile uploadFile, int i) {
 	    File file = uploadFile.getFile();
+	    String scheme = getRequest().getScheme() + "://"+getRequest().getServerName() + "/upload";
 	    if (i == 1){
             fontFile.setFontDisplayName(file.getName());
-            fontFile.setFontUri(uploadFile.getSaveDirectory());
+            fontFile.setFontUri(scheme);
             fontFile.setFontLocalPath(uploadFile.getSaveDirectory());
             long size = uploadFile.getFile().length();
             int mb = Math.round(size/1024.0f/1024.0f);
             fontFile.setFontSize(""+mb);
 	    } else if (i == 0){
 	        fontFile.setFontNamePic(file.getName());
-	        fontFile.setFontNamePicUri(uploadFile.getSaveDirectory());
+	        fontFile.setFontNamePicUri(scheme);
 	    } else if (i == 2){
 	        fontFile.setFontThumnailPic(file.getName());
-	        fontFile.setFontThumnailPicUri(uploadFile.getSaveDirectory());
+	        fontFile.setFontThumnailPicUri(scheme);
 	    }
     }
 
