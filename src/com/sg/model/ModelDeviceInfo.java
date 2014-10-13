@@ -1,5 +1,8 @@
 package com.sg.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 import com.jfinal.plugin.activerecord.Model;
@@ -32,7 +35,7 @@ public class ModelDeviceInfo extends Model<ModelDeviceInfo>{
         .set("display", info.getDisplay())
         .set("host",info.getHost() )
         .set("model", info.getModel())
-        .set("time", info.getTime())
+        .set("time", formatTime())
         .set("androidVersion", info.getAndroidVersion())
         .set("telephone", info.getTelephone())
         .set("networkType", info.getNetworkType())
@@ -40,5 +43,10 @@ public class ModelDeviceInfo extends Model<ModelDeviceInfo>{
         .set("simSerialNumber", info.getSimSerialNumber())
         .set("simState", info.getSimState()).save();
         
+    }
+    
+    public String formatTime(){
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return df.format(new Date());
     }
 }
