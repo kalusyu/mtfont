@@ -6,25 +6,31 @@ import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
+import com.jfinal.core.JFinal;
+import com.jfinal.ext.handler.ContextPathHandler;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.render.ViewType;
 import com.sg.controller.FontController;
+import com.sg.ext.MyMainRenderFactory;
 import com.sg.interceptor.GlobalInterceptor;
+import com.sg.model.Count;
 import com.sg.model.FontFileModel;
 import com.sg.model.FreeUserModel;
+import com.sg.model.Group;
 import com.sg.model.ModelDeviceInfo;
+import com.sg.model.NFile;
 import com.sg.routes.BackRoutes;
 
 public class MainConfig extends JFinalConfig{
 
 	@Override
 	public void configConstant(Constants me) {
-		loadPropertyFile("dbconfig.txt");
+		loadPropertyFile("dbconfig.properties");
 		me.setDevMode(true);
-		me.setViewType(ViewType.JSP);
 //		me.setUrlParaSeparator("?"); //设置参数分隔符
 		me.setMaxPostSize(1024 * 1024 * 10 * 2);
+		me.setMainRenderFactory(new MyMainRenderFactory());
 	}
 
 	@Override
@@ -38,14 +44,14 @@ public class MainConfig extends JFinalConfig{
 		C3p0Plugin plugin = new C3p0Plugin(getProperty("jdbcUrl"), getProperty("user"), getProperty("password"));
 		me.add(plugin);
 		
-//		me.add(new EhCachePlugin());//
-		
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(plugin);
+		arp.setShowSql(true);
 		me.add(arp);
 		
 		arp.addMapping("fileinfo", FontFileModel.class);
 		arp.addMapping("deviceinfo", ModelDeviceInfo.class);
 		arp.addMapping("freeuser", FreeUserModel.class);
+		arp.addMapping("nfile", NFile.class).addMapping("group", Group.class).addMapping("count", Count.class);
 	}
 
 	@Override
@@ -55,6 +61,7 @@ public class MainConfig extends JFinalConfig{
 
 	@Override
 	public void configHandler(Handlers me) {
+		me.add(new ContextPathHandler(Constant.CONTEXT_PATH));
 	}
 	
 	@Override
@@ -67,6 +74,10 @@ public class MainConfig extends JFinalConfig{
 	public void beforeJFinalStop() {
 		super.beforeJFinalStop();
 		//项目关闭之前  写缓存之类的
+	}
+	
+	public static void main(String[] args) {
+		JFinal.start("WebRoot", 80, "/", 5);
 	}
 
 	
