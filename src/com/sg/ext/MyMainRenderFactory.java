@@ -38,7 +38,7 @@ public class MyMainRenderFactory implements IMainRenderFactory{
 
 	@Override
 	public Render getRender(String view) {
-		return new BeetlRender(gt, sViewExtention);
+		return new BeetlRender(gt, view);//这里居然写成 sViewExtention。要调试源码
 	}
 
 	@Override

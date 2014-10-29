@@ -29,9 +29,8 @@ public class AdminController extends Controller{
 
 	@Before(ActionInterceptor.class)
 	public void index(){
-//		renderText("from admincontroller");
-		setAttr("fileinfo", FontFileModel.dao.findAll());
-		renderJsp("upload.jsp");
+		setAttr("fileList", FontFileModel.dao.findAll());
+		render("/admin/admin.html"); 
 	}
 	
 	public void getAllDownload(){

@@ -11,6 +11,7 @@ import com.jfinal.ext.handler.ContextPathHandler;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.render.ViewType;
+import com.sg.controller.AdminController;
 import com.sg.controller.FontController;
 import com.sg.ext.MyMainRenderFactory;
 import com.sg.interceptor.GlobalInterceptor;
@@ -21,21 +22,23 @@ import com.sg.model.Group;
 import com.sg.model.ModelDeviceInfo;
 import com.sg.model.NFile;
 import com.sg.routes.BackRoutes;
+import com.sg.routes.FrontRoutes;
 
 public class MainConfig extends JFinalConfig{
 
 	@Override
 	public void configConstant(Constants me) {
 		loadPropertyFile("dbconfig.properties");
-		me.setDevMode(true);
 //		me.setUrlParaSeparator("?"); //设置参数分隔符
-		me.setMaxPostSize(1024 * 1024 * 10 * 2);
+		me.setError404View("/common/404.html");
+		me.setError500View("/common/500.html");
 		me.setMainRenderFactory(new MyMainRenderFactory());
+		me.setMaxPostSize(1024 * 1024 * 10 * 2);
 	}
 
 	@Override
 	public void configRoute(Routes me) {
-		me.add("/font",FontController.class);
+		me.add(new FrontRoutes());
 		me.add(new BackRoutes());
 	}
 
@@ -46,17 +49,18 @@ public class MainConfig extends JFinalConfig{
 		
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(plugin);
 		arp.setShowSql(true);
-		me.add(arp);
 		
 		arp.addMapping("fileinfo", FontFileModel.class);
 		arp.addMapping("deviceinfo", ModelDeviceInfo.class);
 		arp.addMapping("freeuser", FreeUserModel.class);
 		arp.addMapping("nfile", NFile.class).addMapping("group", Group.class).addMapping("count", Count.class);
+		
+		me.add(arp);
 	}
 
 	@Override
 	public void configInterceptor(Interceptors me) {
-		me.add(new GlobalInterceptor());//这里是配置全局的拦截器
+//		me.add(new GlobalInterceptor());//这里是配置全局的拦截器
 	}
 
 	@Override
