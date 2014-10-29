@@ -12,13 +12,13 @@ import com.sg.mtfont.bean.FontFile;
  */
 public interface SgFont {
 
-	/**
-	 * 存储设备信息
-	 *
-	 * @param info
-	 * @return
-	 * 2014年9月17日 下午8:31:00
-	 */
+    /**
+     * 存储设备信息
+     *
+     * @param info
+     * @return
+     * 2014年9月17日 下午8:31:00
+     */
     int sendDeviceInfo(DeviceInfo info);
     
     /**

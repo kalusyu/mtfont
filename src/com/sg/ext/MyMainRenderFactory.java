@@ -18,32 +18,32 @@ import com.sg.Constant;
  *
  */
 public class MyMainRenderFactory implements IMainRenderFactory{
-	
-	public static final String sViewExtention = ".html";
-	private GroupTemplate gt;
-	
-	public MyMainRenderFactory() {
-		
-		try{
-			WebAppResourceLoader loader = new WebAppResourceLoader(PathKit.getWebRootPath() + Constant.BEETL_ROOT_DIR);
-			Configuration config = Configuration.defaultConfiguration();
-			config.setStatementStart("@");
-			config.setStatementEnd(null);
-			gt = new GroupTemplate(loader, config);
-		} catch (IOException e){
-			e.printStackTrace();
-		}
-		
-	}
+    
+    public static final String sViewExtention = ".html";
+    private GroupTemplate gt;
+    
+    public MyMainRenderFactory() {
+        
+        try{
+            WebAppResourceLoader loader = new WebAppResourceLoader(PathKit.getWebRootPath() + Constant.BEETL_ROOT_DIR);
+            Configuration config = Configuration.defaultConfiguration();
+            config.setStatementStart("@");
+            config.setStatementEnd(null);
+            gt = new GroupTemplate(loader, config);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        
+    }
 
-	@Override
-	public Render getRender(String view) {
-		return new BeetlRender(gt, view);//这里居然写成 sViewExtention。要调试源码
-	}
+    @Override
+    public Render getRender(String view) {
+        return new BeetlRender(gt, view);//这里居然写成 sViewExtention。要调试源码
+    }
 
-	@Override
-	public String getViewExtension() {
-		return sViewExtention;
-	}
+    @Override
+    public String getViewExtension() {
+        return sViewExtention;
+    }
 
 }

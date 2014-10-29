@@ -1,0 +1,31 @@
+package com.sg.controller;
+
+import java.io.File;
+import java.util.List;
+
+import com.jfinal.core.Controller;
+import com.jfinal.upload.UploadFile;
+import com.sg.model.NFile;
+
+public class NFileController extends Controller{
+    
+    public void index(){
+        setAttr("fileList", NFile.dao.getListFiles());
+        render("/admin/upload.html");
+    }
+
+    public void save(){
+        NFile file = null;
+        List<UploadFile> ufs = getFiles();
+        for (UploadFile uf : ufs){
+            file = getModel(NFile.class);
+            file.saveFile(uf);
+        }
+        index();
+    }
+    
+    public void downloadFile(){
+        NFile file = NFile.dao.findById(getPara());
+        renderFile(new File(file.getStr("downloadUrl")));
+    }
+}

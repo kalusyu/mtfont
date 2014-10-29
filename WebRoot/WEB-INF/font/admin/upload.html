@@ -1,0 +1,10 @@
+@ layout("/admin/_layout.html",{title:'upload'}) {
+<div>
+    <h4>upload</h4>
+    <form action="${base}/file/save" method="post" enctype="multipart/form-data">
+                         上传APK文件：<input type="file" name="apk"/>
+                         预览图片：<input type="file" name="picture"/>
+               <input type="submit" value="上传"/>
+    </form>
+</div>
+@ }

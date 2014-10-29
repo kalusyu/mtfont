@@ -1,3 +1,11 @@
 eclipse.preferences.version=1
-encoding/<project>=GBK
+encoding//WebRoot/WEB-INF/font/admin/admin.html=UTF-8
+encoding//WebRoot/WEB-INF/font/admin/upload.html=UTF-8
+encoding//src/com/sg/MainConfig.java=UTF-8
+encoding//src/com/sg/controller=UTF-8
+encoding//src/com/sg/controller/AdminController.java=UTF-8
+encoding//src/com/sg/ext/MyMainRenderFactory.java=UTF-8
+encoding//src/com/sg/interceptor/GlobalInterceptor.java=UTF-8
+encoding//src/com/sg/interfaces/SgFont.java=UTF-8
+encoding/<project>=UTF-8
 separateDerivedEncodings=true

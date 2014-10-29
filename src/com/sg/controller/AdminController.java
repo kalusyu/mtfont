@@ -19,134 +19,134 @@ import com.jfinal.upload.UploadFile;
 import com.sg.interceptor.ActionInterceptor;
 import com.sg.interceptor.ControllerInterceptor;
 import com.sg.model.FontFileModel;
-import com.sg.model.FreeUserModel;
-import com.sg.model.ModelDeviceInfo;
+import com.sg.model.FreeUser;
+import com.sg.model.MobileDevice;
 import com.sg.mtfont.bean.DeviceInfo;
 import com.sg.mtfont.bean.FontFile;
 
-@Before(ControllerInterceptor.class)  //controller ¼¶  À¹½ØÆ÷
+@Before(ControllerInterceptor.class)  //controller çº§  æ‹¦æˆªå™¨
 public class AdminController extends Controller{
 
-	@Before(ActionInterceptor.class)
-	public void index(){
-		setAttr("fileList", FontFileModel.dao.findAll());
-		render("/admin/admin.html"); 
-	}
-	
-	public void getAllDownload(){
-		renderJson("fileinfo",FontFileModel.dao.findAll());
-	}
-	
-	// ÉÏ´«ÎÄ¼þ
-	@ClearInterceptor //Çå³ýcontroller¼¶µÄÀ¹½ØÆ÷
-	public void uploadfile(){
-	    List<UploadFile> files = getFiles();
-	    FontFile fontFile = new FontFile();
-	    if (files != null){
-    	    for (int i=0; i < files.size(); i++){
-    	        handleFile(fontFile,files.get(i),i);
-    	    }
-	    }
-		FontFileModel.dao.saveFile(fontFile);
-		redirect("/admin"); 
-	} 
-	
-	/**
-	 * 
-	 * @author Kalus Yu
-	 * @param uploadFile
-	 * @param i
-	 * 2014Äê9ÔÂ4ÈÕ ÏÂÎç1:56:52
-	 */
-	private void handleFile(FontFile fontFile,UploadFile uploadFile, int i) {
-	    File file = uploadFile.getFile();
-	    String scheme = getRequest().getScheme() + "://"+getRequest().getServerName() + "/upload";
-	    if (i == 1){
+    @Before(ActionInterceptor.class)
+    public void index(){
+        setAttr("fileList", FontFileModel.dao.findAll());
+        render("/admin/admin.html"); 
+    }
+    
+    public void getAllDownload(){
+        renderJson("fileinfo",FontFileModel.dao.findAll());
+    }
+    
+    // ä¸Šä¼ æ–‡ä»¶
+    @ClearInterceptor //æ¸…é™¤controllerçº§çš„æ‹¦æˆªå™¨
+    public void uploadfile(){
+        List<UploadFile> files = getFiles();
+        FontFile fontFile = new FontFile();
+        if (files != null){
+            for (int i=0; i < files.size(); i++){
+                handleFile(fontFile,files.get(i),i);
+            }
+        }
+        FontFileModel.dao.saveFile(fontFile);
+        redirect("/admin"); 
+    } 
+    
+    /**
+     * 
+     * @author Kalus Yu
+     * @param uploadFile
+     * @param i
+     * 2014å¹´9æœˆ4æ—¥ ä¸‹åˆ1:56:52
+     */
+    private void handleFile(FontFile fontFile,UploadFile uploadFile, int i) {
+        File file = uploadFile.getFile();
+        String scheme = getRequest().getScheme() + "://"+getRequest().getServerName() + "/upload";
+        if (i == 1){
             fontFile.setFontDisplayName(file.getName());
             fontFile.setFontUri(scheme);
             fontFile.setFontLocalPath(uploadFile.getSaveDirectory());
             long size = uploadFile.getFile().length();
             int mb = Math.round(size/1024.0f/1024.0f);
             fontFile.setFontSize(""+mb);
-	    } else if (i == 0){
-	        fontFile.setFontNamePic(file.getName());
-	        fontFile.setFontNamePicUri(scheme);
-	    } else if (i == 2){
-	        fontFile.setFontThumnailPic(file.getName());
-	        fontFile.setFontThumnailPicUri(scheme);
-	    }
+        } else if (i == 0){
+            fontFile.setFontNamePic(file.getName());
+            fontFile.setFontNamePicUri(scheme);
+        } else if (i == 2){
+            fontFile.setFontThumnailPic(file.getName());
+            fontFile.setFontThumnailPicUri(scheme);
+        }
     }
 
     public void save(){
-	    saveDeviceInfo();
-	}
-	            
-	public void saveDeviceInfo(){
-	    String jinfo = getPara("jinfo");
-	    Gson gson = new Gson();
-	    DeviceInfo info = gson.fromJson(jinfo, DeviceInfo.class);
-	    ModelDeviceInfo model = new ModelDeviceInfo();
-	    model.saveDeviceInfo(info);
-//	    getModel(ModelDeviceInfo.class).save();
-	}
-	
-	
-	/**
-	 * Í¨¹ýidÏÂÔØ
-	 *
-	 * 2014Äê9ÔÂ17ÈÕ ÏÂÎç10:28:46
-	 */
-	@ClearInterceptor(ClearLayer.ALL) //Çå³ýËùÓÐ¼¶±ðGlobal¼¶ºÍController¼¶
-	public void downloadfileById(){
-		int id = getParaToInt();
-		FontFileModel info = FontFileModel.dao.findById(id);
-		File f = new File(info.getStr("url")+info.getStr("name"));
-		if (f.exists()){
-			renderFile(f);
-			return;
-		}
-	}
-	
-	/**
-	 * Í¨¹ýurlÏÂÔØ
-	 *
-	 * 2014Äê9ÔÂ17ÈÕ ÏÂÎç10:28:25
-	 */
-	public void downloadfileByUrl(){
-		String url = getPara();
-		File f = new File(url);
-		if (f.exists()){
-			renderFile(f);
-			return;
-		}
-	}
-	
-	public boolean buySoft() {
-		String imei = getPara();
-		
-		return FreeUserModel.dao.saveFreeUser(imei);
-	}
-	
-	
-	public void isFreeUser() {
-		String imei = getPara();
-		FreeUserModel freeuser = FreeUserModel.dao.findFreeUserByImei(imei);
-		boolean flag = false;
-		if (freeuser != null){
-		    flag = imei.equals(freeuser.get("imei"));
-		}
-		renderText(String.valueOf(flag));
-	}
-	
-	public byte[] getPreviewFont(){
-		int fontId = getParaToInt();
-		FontFileModel fontfile = FontFileModel.dao.getFontFileById(fontId);
-		String path = fontfile.getStr("pictureUri");
-		return getBytes(path);
-	}
-	
-	/** 
-     * »ñµÃÖ¸¶¨ÎÄ¼þµÄbyteÊý×é 
+        saveDeviceInfo();
+    }
+                
+    public void saveDeviceInfo(){
+        String jinfo = getPara("jinfo");
+        Gson gson = new Gson();
+        DeviceInfo info = gson.fromJson(jinfo, DeviceInfo.class);
+        MobileDevice model = getModel(MobileDevice.class);
+        model.saveDeviceInfo(info);
+//      getModel(ModelDeviceInfo.class).save();
+    }
+    
+    
+    /**
+     * é€šè¿‡idä¸‹è½½
+     *
+     * 2014å¹´9æœˆ17æ—¥ ä¸‹åˆ10:28:46
+     */
+    @ClearInterceptor(ClearLayer.ALL) //æ¸…é™¤æ‰€æœ‰çº§åˆ«Globalçº§å’ŒControllerçº§
+    public void downloadfileById(){
+        int id = getParaToInt();
+        FontFileModel info = FontFileModel.dao.findById(id);
+        File f = new File(info.getStr("url")+info.getStr("name"));
+        if (f.exists()){
+            renderFile(f);
+            return;
+        }
+    }
+    
+    /**
+     * é€šè¿‡urlä¸‹è½½
+     *
+     * 2014å¹´9æœˆ17æ—¥ ä¸‹åˆ10:28:25
+     */
+    public void downloadfileByUrl(){
+        String url = getPara();
+        File f = new File(url);
+        if (f.exists()){
+            renderFile(f);
+            return;
+        }
+    }
+    
+    public boolean buySoft() {
+        String imei = getPara();
+        
+        return FreeUser.dao.saveFreeUser(imei);
+    }
+    
+    
+    public void isFreeUser() {
+        String imei = getPara();
+        FreeUser freeuser = FreeUser.dao.findFreeUserByImei(imei);
+        boolean flag = false;
+        if (freeuser != null){
+            flag = imei.equals(freeuser.get("imei"));
+        }
+        renderText(String.valueOf(flag));
+    }
+    
+    public byte[] getPreviewFont(){
+        int fontId = getParaToInt();
+        FontFileModel fontfile = FontFileModel.dao.getFontFileById(fontId);
+        String path = fontfile.getStr("pictureUri");
+        return getBytes(path);
+    }
+    
+    /** 
+     * èŽ·å¾—æŒ‡å®šæ–‡ä»¶çš„byteæ•°ç»„ 
      */  
     public static byte[] getBytes(String filePath){  
         byte[] buffer = null;  
@@ -172,7 +172,7 @@ public class AdminController extends Controller{
     
     
     /** 
-     * ¸ù¾ÝbyteÊý×é£¬Éú³ÉÎÄ¼þ 
+     * æ ¹æ®byteæ•°ç»„ï¼Œç”Ÿæˆæ–‡ä»¶ 
      */  
     public static void getFile(byte[] bfile, String filePath,String fileName) {  
         BufferedOutputStream bos = null;  
@@ -180,7 +180,7 @@ public class AdminController extends Controller{
         File file = null;  
         try {  
             File dir = new File(filePath);  
-            if(!dir.exists()&&dir.isDirectory()){//ÅÐ¶ÏÎÄ¼þÄ¿Â¼ÊÇ·ñ´æÔÚ  
+            if(!dir.exists()&&dir.isDirectory()){//åˆ¤æ–­æ–‡ä»¶ç›®å½•æ˜¯å¦å­˜åœ¨  
                 dir.mkdirs();  
             }  
             file = new File(filePath+"\\"+fileName);  
@@ -206,13 +206,13 @@ public class AdminController extends Controller{
             }  
         }  
     }  
-	
-	public void toErrorPage(){
-		renderError(404,"");
-		renderError(500,"");//¸ù¾Ý×´Ì¬äÖÈ¾
-		
-		renderNull();//²»äÖÈ¾  
-		
-		/***¶à´Îµ÷ÓÃrenderÖ»ÓÐ×îºóÒ»´ÎÉúÐ§**/
-	}
+    
+    public void toErrorPage(){
+        renderError(404,"");
+        renderError(500,"");//æ ¹æ®çŠ¶æ€æ¸²æŸ“
+        
+        renderNull();//ä¸æ¸²æŸ“  
+        
+        /***å¤šæ¬¡è°ƒç”¨renderåªæœ‰æœ€åŽä¸€æ¬¡ç”Ÿæ•ˆ**/
+    }
 }

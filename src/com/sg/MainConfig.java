@@ -12,77 +12,76 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.render.ViewType;
 import com.sg.controller.AdminController;
-import com.sg.controller.FontController;
 import com.sg.ext.MyMainRenderFactory;
 import com.sg.interceptor.GlobalInterceptor;
 import com.sg.model.Count;
 import com.sg.model.FontFileModel;
-import com.sg.model.FreeUserModel;
+import com.sg.model.FreeUser;
 import com.sg.model.Group;
-import com.sg.model.ModelDeviceInfo;
+import com.sg.model.MobileDevice;
 import com.sg.model.NFile;
 import com.sg.routes.BackRoutes;
 import com.sg.routes.FrontRoutes;
 
 public class MainConfig extends JFinalConfig{
 
-	@Override
-	public void configConstant(Constants me) {
-		loadPropertyFile("dbconfig.properties");
-//		me.setUrlParaSeparator("?"); //ÉèÖÃ²ÎÊı·Ö¸ô·û
-		me.setError404View("/common/404.html");
-		me.setError500View("/common/500.html");
-		me.setMainRenderFactory(new MyMainRenderFactory());
-		me.setMaxPostSize(1024 * 1024 * 10 * 2);
-	}
+    @Override
+    public void configConstant(Constants me) {
+        loadPropertyFile("dbconfig.properties");
+//      me.setUrlParaSeparator("?"); //è®¾ç½®å‚æ•°åˆ†éš”ç¬¦
+        me.setError404View("/common/404.html");
+        me.setError500View("/common/500.html");
+        me.setMainRenderFactory(new MyMainRenderFactory());
+        me.setMaxPostSize(1024 * 1024 * 10 * 2);
+    }
 
-	@Override
-	public void configRoute(Routes me) {
-		me.add(new FrontRoutes());
-		me.add(new BackRoutes());
-	}
+    @Override
+    public void configRoute(Routes me) {
+        me.add(new FrontRoutes());
+        me.add(new BackRoutes());
+    }
 
-	@Override
-	public void configPlugin(Plugins me) {
-		C3p0Plugin plugin = new C3p0Plugin(getProperty("jdbcUrl"), getProperty("user"), getProperty("password"));
-		me.add(plugin);
-		
-		ActiveRecordPlugin arp = new ActiveRecordPlugin(plugin);
-		arp.setShowSql(true);
-		
-		arp.addMapping("fileinfo", FontFileModel.class);
-		arp.addMapping("deviceinfo", ModelDeviceInfo.class);
-		arp.addMapping("freeuser", FreeUserModel.class);
-		arp.addMapping("nfile", NFile.class).addMapping("group", Group.class).addMapping("count", Count.class);
-		
-		me.add(arp);
-	}
+    @Override
+    public void configPlugin(Plugins me) {
+        C3p0Plugin plugin = new C3p0Plugin(getProperty("jdbcUrl"), getProperty("user"), getProperty("password"));
+        me.add(plugin);
+        
+        ActiveRecordPlugin arp = new ActiveRecordPlugin(plugin);
+        arp.setShowSql(true);
+        
+        arp.addMapping("fileinfo", FontFileModel.class);
+        arp.addMapping("deviceinfo", MobileDevice.class);
+        arp.addMapping("freeuser", FreeUser.class);
+        arp.addMapping("nfile", NFile.class).addMapping("group", Group.class).addMapping("count", Count.class);
+        
+        me.add(arp);
+    }
 
-	@Override
-	public void configInterceptor(Interceptors me) {
-//		me.add(new GlobalInterceptor());//ÕâÀïÊÇÅäÖÃÈ«¾ÖµÄÀ¹½ØÆ÷
-	}
+    @Override
+    public void configInterceptor(Interceptors me) {
+//      me.add(new GlobalInterceptor());//è¿™é‡Œæ˜¯é…ç½®å…¨å±€çš„æ‹¦æˆªå™¨
+    }
 
-	@Override
-	public void configHandler(Handlers me) {
-		me.add(new ContextPathHandler(Constant.CONTEXT_PATH));
-	}
-	
-	@Override
-	public void afterJFinalStart() {
-		super.afterJFinalStart();
-		//ÏîÄ¿Æô¶¯Ö®ºó  Ò»Ğ©¶îÍâ²Ù×÷
-	}
-	
-	@Override
-	public void beforeJFinalStop() {
-		super.beforeJFinalStop();
-		//ÏîÄ¿¹Ø±ÕÖ®Ç°  Ğ´»º´æÖ®ÀàµÄ
-	}
-	
-	public static void main(String[] args) {
-		JFinal.start("WebRoot", 80, "/", 5);
-	}
+    @Override
+    public void configHandler(Handlers me) {
+        me.add(new ContextPathHandler(Constant.CONTEXT_PATH));
+    }
+    
+    @Override
+    public void afterJFinalStart() {
+        super.afterJFinalStart();
+        //é¡¹ç›®å¯åŠ¨ä¹‹å  ä¸€äº›é¢å¤–æ“ä½œ
+    }
+    
+    @Override
+    public void beforeJFinalStop() {
+        super.beforeJFinalStop();
+        //é¡¹ç›®å…³é—­ä¹‹å‰  å†™ç¼“å­˜ä¹‹ç±»çš„
+    }
+    
+    public static void main(String[] args) {
+        JFinal.start("WebRoot", 80, "/", 5);
+    }
 
-	
+    
 }

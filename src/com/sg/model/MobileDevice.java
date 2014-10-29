@@ -8,7 +8,7 @@ import java.util.UUID;
 import com.jfinal.plugin.activerecord.Model;
 import com.sg.mtfont.bean.DeviceInfo;
 
-public class ModelDeviceInfo extends Model<ModelDeviceInfo>{
+public class MobileDevice extends Model<MobileDevice>{
 
     /**
      * 
@@ -19,11 +19,11 @@ public class ModelDeviceInfo extends Model<ModelDeviceInfo>{
      * save phone infomation
      * @author Kalus Yu
      * @param info
-     * 2014年8月23日 下午8:32:11
+     * 
      */
     public void saveDeviceInfo(DeviceInfo info) {
 //        UUID uuid = UUID.randomUUID();
-        new ModelDeviceInfo().set("imei", info.getImei())
+        new MobileDevice().set("imei", info.getImei())
         .set("imsi", info.getImsi() )
         .set("macAddress",info.getMacAddress() )
         .set("product", info.getProduct())

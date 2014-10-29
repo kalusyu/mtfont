@@ -10,10 +10,10 @@ import com.jfinal.core.ActionInvocation;
  */
 public class GlobalInterceptor implements Interceptor{
 
-	@Override
-	public void intercept(ActionInvocation ai) {
-		System.out.println("befor kalus interceptor");
-		ai.invoke();
-		System.out.println("after kalus interceptor");
-	}
+    @Override
+    public void intercept(ActionInvocation ai) {
+        System.out.println("befor kalus interceptor");
+        ai.invoke();
+        System.out.println("after kalus interceptor");
+    }
 }

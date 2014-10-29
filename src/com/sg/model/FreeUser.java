@@ -4,19 +4,19 @@ import java.util.List;
 
 import com.jfinal.plugin.activerecord.Model;
 
-public class FreeUserModel extends Model<FreeUserModel>{
+public class FreeUser extends Model<FreeUser>{
 	
-	public static final FreeUserModel dao = new FreeUserModel();
+	public static final FreeUser dao = new FreeUser();
 
 	/**
 	 * 
 	 *
 	 * @param imei
 	 * @return
-	 * 2014Äê9ÔÂ17ÈÕ ÏÂÎç10:36:55
+	 * 2014ï¿½ï¿½9ï¿½ï¿½17ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½10:36:55
 	 */
-	public FreeUserModel findFreeUserByImei(String imei){
-		List<FreeUserModel> lists =  dao.find("select * from freeuser where imei="+imei);
+	public FreeUser findFreeUserByImei(String imei){
+		List<FreeUser> lists =  dao.find("select * from freeuser where imei="+imei);
 		if (lists.size() != 0){
 		    return lists.get(0);
 		}
