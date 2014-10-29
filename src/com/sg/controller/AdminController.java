@@ -12,15 +12,13 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.jfinal.aop.Before;
-import com.jfinal.aop.ClearInterceptor;
-import com.jfinal.aop.ClearLayer;
 import com.jfinal.core.Controller;
 import com.jfinal.upload.UploadFile;
 import com.sg.interceptor.ActionInterceptor;
 import com.sg.interceptor.ControllerInterceptor;
-import com.sg.model.FontFileModel;
 import com.sg.model.FreeUser;
 import com.sg.model.MobileDevice;
+import com.sg.model.NFile;
 import com.sg.mtfont.bean.DeviceInfo;
 import com.sg.mtfont.bean.FontFile;
 
@@ -29,82 +27,8 @@ public class AdminController extends Controller{
 
     @Before(ActionInterceptor.class)
     public void index(){
-        setAttr("fileList", FontFileModel.dao.findAll());
+        setAttr("fileList", NFile.dao.getListFiles());
         render("/admin/admin.html"); 
-    }
-    
-    public void getAllDownload(){
-        renderJson("fileinfo",FontFileModel.dao.findAll());
-    }
-    
-    // 上传文件
-    @ClearInterceptor //清除controller级的拦截器
-    public void uploadfile(){
-        List<UploadFile> files = getFiles();
-        FontFile fontFile = new FontFile();
-        if (files != null){
-            for (int i=0; i < files.size(); i++){
-                handleFile(fontFile,files.get(i),i);
-            }
-        }
-        FontFileModel.dao.saveFile(fontFile);
-        redirect("/admin"); 
-    } 
-    
-    /**
-     * 
-     * @author Kalus Yu
-     * @param uploadFile
-     * @param i
-     * 2014年9月4日 下午1:56:52
-     */
-    private void handleFile(FontFile fontFile,UploadFile uploadFile, int i) {
-        File file = uploadFile.getFile();
-        String scheme = getRequest().getScheme() + "://"+getRequest().getServerName() + "/upload";
-        if (i == 1){
-            fontFile.setFontDisplayName(file.getName());
-            fontFile.setFontUri(scheme);
-            fontFile.setFontLocalPath(uploadFile.getSaveDirectory());
-            long size = uploadFile.getFile().length();
-            int mb = Math.round(size/1024.0f/1024.0f);
-            fontFile.setFontSize(""+mb);
-        } else if (i == 0){
-            fontFile.setFontNamePic(file.getName());
-            fontFile.setFontNamePicUri(scheme);
-        } else if (i == 2){
-            fontFile.setFontThumnailPic(file.getName());
-            fontFile.setFontThumnailPicUri(scheme);
-        }
-    }
-
-    public void save(){
-        saveDeviceInfo();
-    }
-                
-    public void saveDeviceInfo(){
-        String jinfo = getPara("jinfo");
-        Gson gson = new Gson();
-        DeviceInfo info = gson.fromJson(jinfo, DeviceInfo.class);
-        MobileDevice model = getModel(MobileDevice.class);
-        model.saveDeviceInfo(info);
-//      getModel(ModelDeviceInfo.class).save();
-    }
-    
-    
-    /**
-     * 通过id下载
-     *
-     * 2014年9月17日 下午10:28:46
-     */
-    @ClearInterceptor(ClearLayer.ALL) //清除所有级别Global级和Controller级
-    public void downloadfileById(){
-        int id = getParaToInt();
-        FontFileModel info = FontFileModel.dao.findById(id);
-        File f = new File(info.getStr("url")+info.getStr("name"));
-        if (f.exists()){
-            renderFile(f);
-            return;
-        }
     }
     
     /**
@@ -136,13 +60,6 @@ public class AdminController extends Controller{
             flag = imei.equals(freeuser.get("imei"));
         }
         renderText(String.valueOf(flag));
-    }
-    
-    public byte[] getPreviewFont(){
-        int fontId = getParaToInt();
-        FontFileModel fontfile = FontFileModel.dao.getFontFileById(fontId);
-        String path = fontfile.getStr("pictureUri");
-        return getBytes(path);
     }
     
     /** 

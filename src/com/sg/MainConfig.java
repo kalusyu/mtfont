@@ -15,7 +15,6 @@ import com.sg.controller.AdminController;
 import com.sg.ext.MyMainRenderFactory;
 import com.sg.interceptor.GlobalInterceptor;
 import com.sg.model.Count;
-import com.sg.model.FontFileModel;
 import com.sg.model.FreeUser;
 import com.sg.model.Group;
 import com.sg.model.MobileDevice;
@@ -49,7 +48,6 @@ public class MainConfig extends JFinalConfig{
         ActiveRecordPlugin arp = new ActiveRecordPlugin(plugin);
         arp.setShowSql(true);
         
-        arp.addMapping("fileinfo", FontFileModel.class);
         arp.addMapping("deviceinfo", MobileDevice.class);
         arp.addMapping("freeuser", FreeUser.class);
         arp.addMapping("nfile", NFile.class).addMapping("group", Group.class).addMapping("count", Count.class);
