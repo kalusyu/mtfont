@@ -46,4 +46,8 @@ public class NFile extends Model<NFile>{
         set("name", uf.getFileName()).set("type", uf.getContentType())
         .set("size", mb).set("downloadUrl", uf.getSaveDirectory() + uf.getFileName()).save();
     }
+
+	public List<NFile> getFileInfo(int begin, int end) {
+		return find("select * from nfile limit ?,?",begin,end);
+	}
 }

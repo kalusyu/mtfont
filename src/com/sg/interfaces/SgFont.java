@@ -1,10 +1,5 @@
 package com.sg.interfaces;
 
-import java.util.List;
-
-import com.sg.mtfont.bean.DeviceInfo;
-import com.sg.mtfont.bean.FontFile;
-
 /**
  * 
  * @author Kalus Yu
@@ -13,65 +8,54 @@ import com.sg.mtfont.bean.FontFile;
 public interface SgFont {
 
     /**
-     * ´æ´¢Éè±¸ĞÅÏ¢
+     * å­˜å‚¨è®¾å¤‡ä¿¡æ¯
      *
      * @param info
      * @return
-     * 2014Äê9ÔÂ17ÈÕ ÏÂÎç8:31:00
+     * 2014å¹´9æœˆ17æ—¥ ä¸‹åˆ8:31:00
      */
-    int sendDeviceInfo(DeviceInfo info);
+    void saveDeviceInfo();
     
     /**
      * 
-     * ÇëÇó begin µ½ end ÌõÊıµÄÊı¾İ
+     * è¯·æ±‚ begin åˆ° end æ¡æ•°çš„æ•°æ®
      * @param begin
      * @param end
      * @return
-     * 2014Äê9ÔÂ17ÈÕ ÏÂÎç8:31:16
+     * 2014å¹´9æœˆ17æ—¥ ä¸‹åˆ8:31:16
      */
-    List<FontFile> sendRequest(int begin,int end);
+    void getFontInfo();
     
     /**
-     * »ñÈ¡font×ÊÔ´ÁĞ±í
-     *
-     * @return
-     * 2014Äê9ÔÂ17ÈÕ ÏÂÎç8:31:20
-     */
-    List<FontFile> getFontList();
-    
-    /**
-     * »ñÈ¡×ÖÌåÔ¤ÀÀ
+     * è·å–å­—ä½“é¢„è§ˆ
      *
      * @param fontId
      * @return
-     * 2014Äê9ÔÂ17ÈÕ ÏÂÎç8:31:24
+     * 2014å¹´9æœˆ17æ—¥ ä¸‹åˆ8:31:24
      */
-    byte[] getPreviewFont(int fontId);
+    byte[] getPreviewFont();
     
     /**
      * 
-     * ¸ù¾İurlÏÂÔØ×ÖÌåÎÄ¼ş
-     * @param fontUrl
-     * 2014Äê9ÔÂ17ÈÕ ÏÂÎç8:31:41
+     * æ ¹æ®urlä¸‹è½½å­—ä½“æ–‡ä»¶
+     * 2014å¹´9æœˆ17æ—¥ ä¸‹åˆ8:31:41
      */
-    void downloadFontFile(String fontUrl);
+    void downloadFontFile();
     
     /**
      * 
-     * ¸ù¾İimeiºÅ¹ºÂòÃâ·ÑÈí¼ş
-     * @param imei
+     * æ ¹æ®imeiå·è´­ä¹°å…è´¹è½¯ä»¶
      * @return
-     * 2014Äê9ÔÂ17ÈÕ ÏÂÎç8:31:45
+     * 2014å¹´9æœˆ17æ—¥ ä¸‹åˆ8:31:45
      */
-    boolean buySoft(String imei);
+    void buySoft();
     
-    //TODO ÏÈ´æ±¾µØÔÙ´æ·şÎñÆ÷
+    //TODO å…ˆå­˜æœ¬åœ°å†å­˜æœåŠ¡å™¨
     /**
      * 
-     * ÅĞ¶ÏÓÃ»§ÊÇ·ñÒÑÃâ·Ñ
-     * @param imei
+     * åˆ¤æ–­ç”¨æˆ·æ˜¯å¦å·²å…è´¹
      * @return
-     * 2014Äê9ÔÂ17ÈÕ ÏÂÎç8:31:50
+     * 2014å¹´9æœˆ17æ—¥ ä¸‹åˆ8:31:50
      */
-    boolean isFreeUser(String imei); 
+    void isFreeUser(); 
 }
