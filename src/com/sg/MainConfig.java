@@ -26,6 +26,7 @@ public class MainConfig extends JFinalConfig{
 
     @Override
     public void configConstant(Constants me) {
+        me.setDevMode(true);
         loadPropertyFile("dbconfig.properties");
 //      me.setUrlParaSeparator("?"); //设置参数分隔符
         me.setError404View("/common/404.html");

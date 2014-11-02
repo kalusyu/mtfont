@@ -17,6 +17,6 @@ public class CountController extends Controller{
     public void update(){
     	int fileId = getParaToInt();
     	Count count = Count.dao.findByFileId(fileId);
-    	count.updateCount();
+    	count.updateCount(10,10);
     }
 }

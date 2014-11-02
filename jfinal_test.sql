@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50087
 File Encoding         : 65001
 
-Date: 2014-10-28 20:49:15
+Date: 2014-11-02 15:41:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,11 +25,17 @@ CREATE TABLE `count` (
   `downloadNum` bigint(20) default NULL,
   `fileId` int(11) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of count
 -- ----------------------------
+INSERT INTO `count` VALUES ('5', '10', '10', '5');
+INSERT INTO `count` VALUES ('6', '68', '44', '6');
+INSERT INTO `count` VALUES ('7', '12', '10', '7');
+INSERT INTO `count` VALUES ('8', '18', '32', '8');
+INSERT INTO `count` VALUES ('9', '10', '10', '9');
+INSERT INTO `count` VALUES ('10', '30', '24', '10');
 
 -- ----------------------------
 -- Table structure for `deviceinfo`
@@ -57,53 +63,11 @@ CREATE TABLE `deviceinfo` (
   `simSerialNumber` varchar(255) default NULL,
   `simState` varchar(255) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of deviceinfo
 -- ----------------------------
-INSERT INTO `deviceinfo` VALUES ('74', '863564020008489', '8c:77:16:93:55:99', null, 'Meitu2', 'Meitu', 'Meitu', 'Meitu2', '17', 'Meitu2', 'MK260_05_V01.0_141010', 'meitu-mobile-server', 'MeituM2', '', '4.2.2', null, '0', '', '', '1');
-INSERT INTO `deviceinfo` VALUES ('75', '863564020008489', '8c:77:16:93:55:99', null, 'Meitu2', 'Meitu', 'Meitu', 'Meitu2', '17', 'Meitu2', 'MK260_05_V01.0_141010', 'meitu-mobile-server', 'MeituM2', '2014-10-13 07:54:48', '4.2.2', null, '0', '', '', '1');
-INSERT INTO `deviceinfo` VALUES ('76', '863564020008489', '8c:77:16:93:55:99', null, 'Meitu2', 'Meitu', 'Meitu', 'Meitu2', '17', 'Meitu2', 'MK260_05_V01.0_141010', 'meitu-mobile-server', 'MeituM2', '2014-10-13 19:55:49', '4.2.2', null, '0', '', '', '1');
-INSERT INTO `deviceinfo` VALUES ('77', '863564020008489', '8c:77:16:93:55:99', null, 'Meitu2', 'Meitu', 'Meitu', 'Meitu2', '17', 'Meitu2', 'MK260_05_V01.0_141010', 'meitu-mobile-server', 'MeituM2', '2014-10-13 19:57:32', '4.2.2', null, '0', '', '', '1');
-INSERT INTO `deviceinfo` VALUES ('78', '863564020008489', '8c:77:16:93:55:99', null, 'Meitu2', 'Meitu', 'Meitu', 'Meitu2', '17', 'Meitu2', 'MK260_05_V01.0_141010', 'meitu-mobile-server', 'MeituM2', '2014-10-13 19:58:56', '4.2.2', null, '0', '', '', '1');
-INSERT INTO `deviceinfo` VALUES ('79', '863564020008489', '8c:77:16:93:55:99', null, 'Meitu2', 'Meitu', 'Meitu', 'Meitu2', '17', 'Meitu2', 'MK260_05_V01.0_141010', 'meitu-mobile-server', 'MeituM2', '2014-10-13 20:00:10', '4.2.2', null, '0', '', '', '1');
-INSERT INTO `deviceinfo` VALUES ('80', '863564020008489', '8c:77:16:93:55:99', null, 'Meitu2', 'Meitu', 'Meitu', 'Meitu2', '17', 'Meitu2', 'MK260_05_V01.0_141010', 'meitu-mobile-server', 'MeituM2', '2014-10-13 20:04:49', '4.2.2', null, '0', '', '', '1');
-INSERT INTO `deviceinfo` VALUES ('81', '863564020008489', '8c:77:16:93:55:99', null, 'Meitu2', 'Meitu', 'Meitu', 'Meitu2', '17', 'Meitu2', 'MK260_05_V01.0_141010', 'meitu-mobile-server', 'MeituM2', '2014-10-13 20:06:18', '4.2.2', null, '0', '', '', '1');
-INSERT INTO `deviceinfo` VALUES ('82', '863564020008489', '8c:77:16:93:55:99', null, 'Meitu2', 'Meitu', 'Meitu', 'Meitu2', '17', 'Meitu2', 'MK260_05_V01.0_141010', 'meitu-mobile-server', 'MeituM2', '2014-10-13 20:06:41', '4.2.2', null, '0', '', '', '1');
-
--- ----------------------------
--- Table structure for `fileinfo`
--- ----------------------------
-DROP TABLE IF EXISTS `fileinfo`;
-CREATE TABLE `fileinfo` (
-  `id` int(11) NOT NULL auto_increment,
-  `fontDisplayName` varchar(255) default NULL,
-  `fontName` varchar(255) default NULL,
-  `fontNamePic` varchar(255) default NULL,
-  `fontNamePicUri` varchar(255) default NULL,
-  `fontThumnailPic` varchar(255) default NULL,
-  `fontThumnailPicUri` varchar(255) default NULL,
-  `fontSize` varchar(255) default NULL,
-  `fontUri` varchar(255) default NULL,
-  `pictureUri` varchar(255) default NULL,
-  `fontLocalPath` varchar(255) default NULL,
-  `pictureLocalPath` varchar(255) default NULL,
-  `packageName` varchar(255) default NULL,
-  `loveNumbers` varchar(255) default NULL,
-  `downloadNumbers` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of fileinfo
--- ----------------------------
-INSERT INTO `fileinfo` VALUES ('7', 'baofengti.apk', '9b119d42-30e6-435b-9ed8-0fe76ce2734a', 'baofengti.png', 'http://192.168.43.189/upload/', 'baofengti_preview.png', 'http://192.168.43.189/upload/', '9', 'http://192.168.43.189/upload/', null, 'O:\\workspace\\jfinal-sgfont\\WebRoot\\upload\\', null, null, null, null);
-INSERT INTO `fileinfo` VALUES ('8', 'fangzhengxiaozhuanti.apk', 'dabb6e2e-530c-48d9-a0de-bcfb2e34a9ae', 'fangzhengxiaozhuanti.png', 'http://192.168.43.189/upload/', 'fangzhengxiaozhuanti_preview.png', 'http://192.168.43.189/upload/', '3', 'http://192.168.43.189/upload/', null, 'O:\\workspace\\jfinal-sgfont\\WebRoot\\upload\\', null, null, null, null);
-INSERT INTO `fileinfo` VALUES ('9', 'maimengzuosi.apk', 'c468ebfe-8c76-4517-aa61-6926fda02f73', 'maimengzuosi.png', 'http://192.168.43.189/upload/', 'maimengzuosi_preview.png', 'http://192.168.43.189/upload/', '6', 'http://192.168.43.189/upload/', null, 'O:\\workspace\\jfinal-sgfont\\WebRoot\\upload\\', null, null, null, null);
-INSERT INTO `fileinfo` VALUES ('10', 'hudiejiekitty.apk', 'eac518de-0f84-49cb-ad9b-5bd725f219e4', 'hudiejiekitty.png', 'http://192.168.43.189/upload/', 'hudiejiekitty_preview.png', 'http://192.168.43.189/upload/', '9', 'http://192.168.43.189/upload/', null, 'O:\\workspace\\jfinal-sgfont\\WebRoot\\upload\\', null, null, null, null);
-INSERT INTO `fileinfo` VALUES ('11', 'huakangshaonv.apk', '1c49ce56-9497-483e-a4d3-371057c451a1', 'huakangshaonv.png', 'http://192.168.43.189/upload/', 'huakangshaonv_preview.png', 'http://192.168.43.189/upload/', '2', 'http://192.168.43.189/upload/', null, 'O:\\workspace\\jfinal-sgfont\\WebRoot\\upload\\', null, null, null, null);
-INSERT INTO `fileinfo` VALUES ('12', 'dingdingti.apk', '33c1b060-078e-4465-843a-6f5fdb895ad1', 'dingdingti.png', 'http://192.168.43.189/upload/', 'dingdingti_preview.png', 'http://192.168.43.189/upload/', '14', 'http://192.168.43.189/upload/', null, 'O:\\workspace\\jfinal-sgfont\\WebRoot\\upload\\', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `freeuser`
@@ -199,11 +163,14 @@ CREATE TABLE `group` (
   `id` int(11) NOT NULL auto_increment,
   `groupName` varchar(11) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of group
 -- ----------------------------
+INSERT INTO `group` VALUES ('3', 'd9d42db3');
+INSERT INTO `group` VALUES ('4', 'b02ce2db');
+INSERT INTO `group` VALUES ('5', '5198fb16');
 
 -- ----------------------------
 -- Table structure for `nfile`
@@ -216,9 +183,16 @@ CREATE TABLE `nfile` (
   `size` varchar(255) default NULL,
   `type` varchar(255) default NULL,
   `downloadUrl` varchar(255) default NULL,
+  `relativeUrl` varchar(255) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of nfile
 -- ----------------------------
+INSERT INTO `nfile` VALUES ('5', '3', 'fangzhengmiaowu.apk', '4', 'application/octet-stream', 'O:\\workspace\\jfinal-sgfont\\WebRoot\\upload\\fangzhengmiaowu.apk', '\\upload\\fangzhengmiaowu.apk');
+INSERT INTO `nfile` VALUES ('6', '3', 'fangzhengmiaowu_p.jpg', '0', 'image/jpeg', 'O:\\workspace\\jfinal-sgfont\\WebRoot\\upload\\fangzhengmiaowu_p.jpg', '\\upload\\fangzhengmiaowu_p.jpg');
+INSERT INTO `nfile` VALUES ('7', '4', 'fangzhengshaoer.apk', '6', 'application/octet-stream', 'O:\\workspace\\jfinal-sgfont\\WebRoot\\upload\\fangzhengshaoer.apk', '\\upload\\fangzhengshaoer.apk');
+INSERT INTO `nfile` VALUES ('8', '4', 'fangzhengshaoer_p.jpg', '0', 'image/jpeg', 'O:\\workspace\\jfinal-sgfont\\WebRoot\\upload\\fangzhengshaoer_p.jpg', '\\upload\\fangzhengshaoer_p.jpg');
+INSERT INTO `nfile` VALUES ('9', '5', 'huakangshaonv.apk', '2', 'application/octet-stream', 'O:\\workspace\\jfinal-sgfont\\WebRoot\\upload\\huakangshaonv.apk', '\\upload\\huakangshaonv.apk');
+INSERT INTO `nfile` VALUES ('10', '5', 'huakangshaonv_p.png', '0', 'image/png', 'O:\\workspace\\jfinal-sgfont\\WebRoot\\upload\\huakangshaonv_p.png', '\\upload\\huakangshaonv_p.png');

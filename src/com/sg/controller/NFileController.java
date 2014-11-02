@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.jfinal.core.Controller;
 import com.jfinal.upload.UploadFile;
+import com.sg.model.Count;
 import com.sg.model.Group;
 import com.sg.model.NFile;
 
@@ -25,6 +26,9 @@ public class NFileController extends Controller{
         for (UploadFile uf : ufs){
             file = getModel(NFile.class);
             file.saveFile(uf,groupId);
+            int fileId = file.getInt("id");
+            Count count = getModel(Count.class);
+            count.initSave(fileId);
         }
         index();
     }

@@ -2,7 +2,9 @@ package com.sg.model;
 
 import java.util.List;
 
+import com.jfinal.kit.PathKit;
 import com.jfinal.plugin.activerecord.Model;
+import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.upload.UploadFile;
 
 public class NFile extends Model<NFile>{
@@ -32,8 +34,11 @@ public class NFile extends Model<NFile>{
 //            mb = Math.round(size/1024.0f);
 //        }
         
+        String webRootPath = PathKit.getWebRootPath();
+        String relativeUrl = uf.getSaveDirectory().replace(webRootPath, "");
         set("name", uf.getFileName()).set("type", uf.getContentType()).set("groupId", groupId)
-        .set("size", mb).set("downloadUrl", uf.getSaveDirectory() + uf.getFileName()).save();
+        .set("size", mb).set("downloadUrl", uf.getSaveDirectory() + uf.getFileName())
+        .set("relativeUrl", relativeUrl + uf.getFileName()).save();
     }
     
     public void saveFile(UploadFile uf){
@@ -50,4 +55,8 @@ public class NFile extends Model<NFile>{
 	public List<NFile> getFileInfo(int begin, int end) {
 		return find("select * from nfile limit ?,?",begin,end);
 	}
+
+    public Page<NFile> getPageFile(int pageNumber,int pageSize) {
+        return paginate(pageNumber, pageSize, "select id", "from nfile");
+    }
 }

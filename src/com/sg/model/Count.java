@@ -12,9 +12,24 @@ import com.jfinal.plugin.activerecord.Model;
 public class Count extends Model<Count>{
 
     public static Count dao = new Count();
+    public static final int DEFAULT_UPDATE_SIZE = 1;
+    
+    public static final int INIT_SIZE = 10;
 
-	public void updateCount() {
-		set("loveNum", getInt("loveNum") + 1).set("downloadNum", getInt("downloadNum")+1).update();
+    /**
+     * 
+     * @author Kalus Yu
+     * @param updateLoveSize 增加的喜欢数量
+     * @param upadteDownloadSize 增加的下载数量
+     * 2014年11月2日 下午2:38:05
+     */
+	public void updateCount(int updateLoveSize,int upadteDownloadSize) {
+		set("loveNum", getLong("loveNum") + updateLoveSize)
+		.set("downloadNum", getLong("downloadNum") + upadteDownloadSize).update();
+	}
+	
+	public List<Count> findList(){
+	    return find("select * from count");
 	}
 
 	public Count findByFileId(int fileId) {
@@ -24,6 +39,11 @@ public class Count extends Model<Count>{
 		}
 		return null;
 	}
+
+    public void initSave(int fileId) {
+        set("loveNum", INIT_SIZE)
+        .set("downloadNum", INIT_SIZE).set("fileId", fileId).save();
+    }
     
     
 }
