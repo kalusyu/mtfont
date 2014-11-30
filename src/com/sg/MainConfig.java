@@ -78,9 +78,9 @@ public class MainConfig extends JFinalConfig{
         //项目关闭之前  写缓存之类的
     }
     
-    public static void main(String[] args) {
-        JFinal.start("WebRoot", 80, "/", 5);
-    }
+//    public static void main(String[] args) {
+//        JFinal.start("WebRoot", 80, "/", 5);
+//    }
 
     
 }

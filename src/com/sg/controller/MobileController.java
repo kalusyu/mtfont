@@ -8,6 +8,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Record;
 import com.sg.interfaces.SgFont;
 import com.sg.model.Count;
+import com.sg.model.FreeUser;
 import com.sg.model.NFile;
 
 public class MobileController extends Controller implements SgFont{
@@ -38,6 +39,7 @@ public class MobileController extends Controller implements SgFont{
             record.set("type", nfile.get("type"));
             record.set("downloadUrl", nfile.get("downloadUrl"));
             record.set("relativeUrl", nfile.get("relativeUrl"));
+            record.set("packageName", nfile.get("packageName"));
             records.add(record);
         }
         
@@ -62,14 +64,20 @@ public class MobileController extends Controller implements SgFont{
 
 	@Override
 	public void buySoft() {
-		// TODO Auto-generated method stub
-		
+		String imei = getPara();
+		FreeUser user = getModel(FreeUser.class);
+		user.saveFreeUser(imei);
 	}
 
 	@Override
 	public void isFreeUser() {
-		// TODO Auto-generated method stub
-		
+		String imei = getPara();
+		FreeUser user = FreeUser.dao.findFreeUserByImei(imei);
+		if (user != null){
+			renderJson("freeUser", true);
+		} else {
+			renderJson("freeUser", false);
+		}
 	}
 	
 	public void getPageInfo(){

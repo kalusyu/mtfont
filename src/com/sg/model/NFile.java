@@ -35,13 +35,17 @@ public class NFile extends Model<NFile>{
 //        if (mb == 0){//kb
 //            mb = Math.round(size/1024.0f);
 //        }
+        String packageName = null;
+        if (uf.getFileName().endsWith(".apk")){
+        	packageName = ApkUtils.getAPKPageName(uf.getSaveDirectory() + File.separatorChar + uf.getFileName());
+        }
         
         String webRootPath = PathKit.getWebRootPath();
         String relativeUrl = uf.getSaveDirectory().replace(webRootPath, "");
         set("name", uf.getFileName()).set("type", uf.getContentType()).set("groupId", groupId)
         .set("size", mb).set("downloadUrl", uf.getSaveDirectory() + uf.getFileName())
         .set("relativeUrl", relativeUrl + uf.getFileName())
-        .set("packageName", ApkUtils.getAPKPageName(uf.getSaveDirectory() + File.separatorChar + uf.getFileName())).save();
+        .set("packageName", packageName).save();
     }
     
     public void saveFile(UploadFile uf){
