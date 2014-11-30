@@ -1,11 +1,13 @@
 package com.sg.model;
 
+import java.io.File;
 import java.util.List;
 
 import com.jfinal.kit.PathKit;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.upload.UploadFile;
+import com.sg.utils.apk.ApkUtils;
 
 public class NFile extends Model<NFile>{
 
@@ -38,7 +40,8 @@ public class NFile extends Model<NFile>{
         String relativeUrl = uf.getSaveDirectory().replace(webRootPath, "");
         set("name", uf.getFileName()).set("type", uf.getContentType()).set("groupId", groupId)
         .set("size", mb).set("downloadUrl", uf.getSaveDirectory() + uf.getFileName())
-        .set("relativeUrl", relativeUrl + uf.getFileName()).save();
+        .set("relativeUrl", relativeUrl + uf.getFileName())
+        .set("packageName", ApkUtils.getAPKPageName(uf.getSaveDirectory() + File.separatorChar + uf.getFileName())).save();
     }
     
     public void saveFile(UploadFile uf){
